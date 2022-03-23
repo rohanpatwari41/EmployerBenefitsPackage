@@ -1,0 +1,79 @@
+﻿@model EmployeeBenefitPackage.Models.EmpDependent
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Employee Salary Calculation</h2>
+
+
+@using (Html.BeginForm("Index", "Employee", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div><div class="form-group" style="text-align:left;margin-top:20px;">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10" style="text-align:left;margin-top:-5px;">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", style = "width: 175px;" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group" style="text-align:left;margin-top:75px;">
+        @Html.LabelFor(model => model.MaritalStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10" style="text-align:left;margin-top:0px;">
+            @Html.Label("Single")
+            @Html.RadioButtonFor(model => model.MaritalStatus, "Single", new { @class = "input-group radio", @id = "chkMarried", @onclick = "EnableDisableTextBox()" })
+            @Html.Label("Married")
+            @Html.RadioButtonFor(model => model.MaritalStatus, "Married", new { @class = "input-group radio", @id = "chkSingle", @onclick = "EnableDisableTextBox()" })
+            @Html.ValidationMessageFor(model => model.MaritalStatus, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+    <div class="form-group" style="text-align:left;margin-top:175px;">
+        @Html.LabelFor(model => model.Children, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10" style="text-align:left;margin-top:0px;">
+            @Html.EditorFor(model => model.Children, new { htmlAttributes = new { @class = "form-control", style = "width: 55px;", @id = "txtChildren", disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => model.Children, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+    <div class="form-group" style="text-align:left;margin-top:225px;">
+        @Html.LabelFor(model => model.DependentNameStartsWithA, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10" style="text-align:left;margin-top:15px;">
+            @Html.EditorFor(model => model.DependentNameStartsWithA, new { htmlAttributes = new { @class = "form-control", style = "width: 55px;", @id = "txtDependentNameStartsWithA", disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => model.DependentNameStartsWithA, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10" style="text-align:left;margin-top:20px;">
+            <input type="submit" value="Submit" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+
+<script type="text/javascript">
+    function EnableDisableTextBox() {
+        var chkSingle = document.getElementById("chkSingle");
+        var txtChildren = document.getElementById("txtChildren");
+        var txtDependentNameStartsWithA = document.getElementById("txtDependentNameStartsWithA");
+        txtChildren.disabled = chkSingle.checked ? false : true;
+        if (!txtChildren.disabled) {
+            txtChildren.focus();
+        }
+        txtDependentNameStartsWithA.disabled = chkSingle.checked ? false : true;
+        if (!txtDependentNameStartsWithA.disabled) {
+            txtDependentNameStartsWithA.focus();
+        }
+    }
+</script>
+
+
